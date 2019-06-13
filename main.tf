@@ -109,14 +109,14 @@ resource "tfe_team_access" "net-net" {
 resource "tfe_team_access" "sec-sec" {
   access       = "admin"
   team_id      = "${tfe_team.security.id}"
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
  }
 
 
 resource "tfe_team_access" "secadmins-sec" {
   access       = "admin"
   team_id      = "${tfe_team.security_admins.id}"
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
  }
 
 resource "tfe_team_access" "net-secadmins" {
@@ -333,7 +333,7 @@ resource "tfe_variable" "confirm_destroy5" {
   key          = "CONFIRM_DESTROY"
   value        = "1"
   category     = "env"
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
 resource "tfe_variable" "set_ttl1" {
@@ -368,7 +368,7 @@ resource "tfe_variable" "set_ttl5" {
   key          = "WORKSPACE_TTL"
   value        = "30"
   category     = "env"
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
 resource "tfe_variable" "org_var_development" {
@@ -391,7 +391,7 @@ resource "tfe_variable" "org_var_security" {
   value    = "${var.org}"
   category = "terraform"
 
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
 resource "tfe_variable" "environment_name_dev" {
@@ -423,7 +423,7 @@ resource "tfe_variable" "hostname_var_security" {
   value    = "${var.hostname}"
   category = "terraform"
 
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
 resource "tfe_variable" "token_var_security" {
@@ -431,5 +431,5 @@ resource "tfe_variable" "token_var_security" {
   value    = "${var.token}"
   category = "terraform"
 
-  workspace_id = "${tfe_workspace.security.id}"
+  workspace_id = "${tfe_workspace.sentinel.id}"
 }

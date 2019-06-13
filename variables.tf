@@ -26,3 +26,5 @@ variable "network_workspace" {}
 variable "network_repo" {}
 
 variable "sentinel_repo" {}
+
+variable "sentinel_workspace" {}
