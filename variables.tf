@@ -21,4 +21,8 @@ variable "aws_access_key" {}
 
 variable "aws_secret_key" {}
 
-variable "creator_workspace" {}
+variable "network_workspace" {}
+
+variable "network_repo" {}
+
+variable "sentinel_repo" {}
