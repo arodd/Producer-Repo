@@ -129,6 +129,12 @@ resource "tfe_team_access" "net-ops" {
   workspace_id = "${tfe_workspace.network.id}"
 }
 
+resource "tfe_team_access" "net-release" {
+  access       = "read"
+  team_id      = "${tfe_team.release.id}"
+  workspace_id = "${tfe_workspace.network.id}"
+}
+
 resource "tfe_team_access" "net-net" {
   access       = "write"
   team_id      = "${tfe_team.network.id}"
