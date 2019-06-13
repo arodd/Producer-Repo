@@ -427,6 +427,13 @@ resource "tfe_variable" "self_name_security" {
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
+resource "tfe_variable" "use_case_security" {
+  key          = "use_case_name"
+  value        = "${var.use_case_name}"
+  category     = "terraform"
+  workspace_id = "${tfe_workspace.sentinel.id}"
+}
+
 data "tfe_team" "owners" {
   name         = "owners"
   organization = "${var.org}"
