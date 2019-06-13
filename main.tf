@@ -161,7 +161,7 @@ resource "tfe_workspace" "staging" {
   name              = "${var.use_case_name}-staging"
   organization      = "${var.org}"
   auto_apply        = true
-  queue_all_runs    = false
+  queue_all_runs    = true
   terraform_version = "0.11.14"
 
   vcs_repo = {
@@ -174,7 +174,7 @@ resource "tfe_workspace" "staging" {
 resource "tfe_workspace" "production" {
   name              = "${var.use_case_name}-production"
   organization      = "${var.org}"
-  queue_all_runs    = false
+  queue_all_runs    = true
   terraform_version = "0.11.14"
 
   vcs_repo = {
