@@ -359,14 +359,14 @@ resource "tfe_variable" "set_ttl3" {
 
 resource "tfe_variable" "set_ttl4" {
   key          = "WORKSPACE_TTL"
-  value        = "30"
+  value        = "38"
   category     = "env"
   workspace_id = "${tfe_workspace.network.id}"
 }
 
 resource "tfe_variable" "set_ttl5" {
   key          = "WORKSPACE_TTL"
-  value        = "30"
+  value        = "20"
   category     = "env"
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
@@ -382,7 +382,6 @@ resource "tfe_variable" "org_var_staging" {
   key      = "org"
   value    = "${var.org}"
   category = "terraform"
-
   workspace_id = "${tfe_workspace.staging.id}"
 }
 
@@ -390,7 +389,6 @@ resource "tfe_variable" "org_var_security" {
   key      = "tfe_organization"
   value    = "${var.org}"
   category = "terraform"
-
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
@@ -398,7 +396,6 @@ resource "tfe_variable" "environment_name_dev" {
   key      = "environment"
   value    = "dev"
   category = "terraform"
-
   workspace_id = "${tfe_workspace.development.id}"
 }
 
@@ -406,7 +403,6 @@ resource "tfe_variable" "environment_name_stage" {
   key      = "environment"
   value    = "stage"
   category = "terraform"
-
   workspace_id = "${tfe_workspace.staging.id}"
 }
 
@@ -414,7 +410,6 @@ resource "tfe_variable" "environment_name_prod" {
   key      = "environment"
   value    = "prod"
   category = "terraform"
-
   workspace_id = "${tfe_workspace.production.id}"
 }
 
@@ -422,14 +417,22 @@ resource "tfe_variable" "hostname_var_security" {
   key      = "tfe_hostname"
   value    = "${var.hostname}"
   category = "terraform"
-
   workspace_id = "${tfe_workspace.sentinel.id}"
+}
+
+data "tfe_team" "owners" {
+  name = "owners"
+  organization = "${var.org}"
+}
+
+resource "tfe_team_token" "owners" {
+  team_id = "${data.tfe_team.owners.id}"
 }
 
 resource "tfe_variable" "token_var_security" {
   key      = "tfe_token"
-  value    = "${var.token}"
+  value    = "${tfe_team_token.owners.token}"
   category = "terraform"
-
+  sensitive    = "true"
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
