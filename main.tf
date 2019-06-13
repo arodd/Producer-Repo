@@ -4,12 +4,12 @@ provider "tfe" {
 }
 
 resource "tfe_team" "developers" {
-  name         = "${var.use_case_name}-developers"
+  name         = "${var.use_case_name}-Devs"
   organization = "${var.org}"
 }
 
 resource "tfe_team" "ops" {
-  name         = "${var.use_case_name}-production"
+  name         = "${var.use_case_name}-Ops"
   organization = "${var.org}"
 }
 
@@ -82,6 +82,7 @@ resource "tfe_team_access" "staging-ops" {
   team_id      = "${tfe_team.ops.id}"
   workspace_id = "${tfe_workspace.staging.id}"
 }
+
 resource "tfe_team_access" "production-ops" {
   access       = "admin"
   team_id      = "${tfe_team.ops.id}"
@@ -110,38 +111,37 @@ resource "tfe_team_access" "sec-sec" {
   access       = "admin"
   team_id      = "${tfe_team.security.id}"
   workspace_id = "${tfe_workspace.sentinel.id}"
- }
-
+}
 
 resource "tfe_team_access" "secadmins-sec" {
   access       = "admin"
   team_id      = "${tfe_team.security_admins.id}"
   workspace_id = "${tfe_workspace.sentinel.id}"
- }
+}
 
 resource "tfe_team_access" "net-secadmins" {
   access       = "admin"
   team_id      = "${tfe_team.security_admins.id}"
   workspace_id = "${tfe_workspace.network.id}"
- }
+}
 
- resource "tfe_team_access" "development-secadmins" {
+resource "tfe_team_access" "development-secadmins" {
   access       = "admin"
   team_id      = "${tfe_team.security_admins.id}"
   workspace_id = "${tfe_workspace.development.id}"
- }
+}
 
- resource "tfe_team_access" "staging-secadmins" {
+resource "tfe_team_access" "staging-secadmins" {
   access       = "admin"
   team_id      = "${tfe_team.security_admins.id}"
   workspace_id = "${tfe_workspace.staging.id}"
- }
+}
 
- resource "tfe_team_access" "production-secadmins" {
+resource "tfe_team_access" "production-secadmins" {
   access       = "admin"
   team_id      = "${tfe_team.security_admins.id}"
   workspace_id = "${tfe_workspace.production.id}"
- }
+}
 
 resource "tfe_workspace" "development" {
   name              = "${var.use_case_name}-development"
@@ -379,49 +379,56 @@ resource "tfe_variable" "org_var_development" {
 }
 
 resource "tfe_variable" "org_var_staging" {
-  key      = "org"
-  value    = "${var.org}"
-  category = "terraform"
+  key          = "org"
+  value        = "${var.org}"
+  category     = "terraform"
   workspace_id = "${tfe_workspace.staging.id}"
 }
 
 resource "tfe_variable" "org_var_security" {
-  key      = "tfe_organization"
-  value    = "${var.org}"
-  category = "terraform"
+  key          = "tfe_organization"
+  value        = "${var.org}"
+  category     = "terraform"
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
 resource "tfe_variable" "environment_name_dev" {
-  key      = "environment"
-  value    = "dev"
-  category = "terraform"
+  key          = "environment"
+  value        = "dev"
+  category     = "terraform"
   workspace_id = "${tfe_workspace.development.id}"
 }
 
 resource "tfe_variable" "environment_name_stage" {
-  key      = "environment"
-  value    = "stage"
-  category = "terraform"
+  key          = "environment"
+  value        = "stage"
+  category     = "terraform"
   workspace_id = "${tfe_workspace.staging.id}"
 }
 
 resource "tfe_variable" "environment_name_prod" {
-  key      = "environment"
-  value    = "prod"
-  category = "terraform"
+  key          = "environment"
+  value        = "prod"
+  category     = "terraform"
   workspace_id = "${tfe_workspace.production.id}"
 }
 
-resource "tfe_variable" "hostname_var_security" {
-  key      = "tfe_hostname"
-  value    = "${var.hostname}"
-  category = "terraform"
+resource "tfe_variable" "hostname_security" {
+  key          = "tfe_hostname"
+  value        = "${var.hostname}"
+  category     = "terraform"
+  workspace_id = "${tfe_workspace.sentinel.id}"
+}
+
+resource "tfe_variable" "self_name_security" {
+  key          = "self_name"
+  value        = "${var.sentinel_workspace}"
+  category     = "terraform"
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
 
 data "tfe_team" "owners" {
-  name = "owners"
+  name         = "owners"
   organization = "${var.org}"
 }
 
@@ -429,10 +436,10 @@ resource "tfe_team_token" "owners" {
   team_id = "${data.tfe_team.owners.id}"
 }
 
-resource "tfe_variable" "token_var_security" {
-  key      = "tfe_token"
-  value    = "${tfe_team_token.owners.token}"
-  category = "terraform"
+resource "tfe_variable" "token_security" {
+  key          = "tfe_token"
+  value        = "${tfe_team_token.owners.token}"
+  category     = "terraform"
   sensitive    = "true"
   workspace_id = "${tfe_workspace.sentinel.id}"
 }
