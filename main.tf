@@ -13,11 +13,6 @@ resource "tfe_team" "ops" {
   organization = "${var.org}"
 }
 
-resource "tfe_team" "release" {
-  name         = "${var.use_case_name}-Release"
-  organization = "${var.org}"
-}
-
 resource "tfe_team" "network" {
   name         = "Networking"
   organization = "${var.org}"
@@ -43,11 +38,6 @@ resource "tfe_team_member" "ops-user" {
   username = "ops-user"
 }
 
-resource "tfe_team_member" "release-user" {
-  team_id  = "${tfe_team.release.id}"
-  username = "release-user"
-}
-
 resource "tfe_team_member" "net-user" {
   team_id  = "${tfe_team.network.id}"
   username = "net-user"
@@ -70,7 +60,7 @@ resource "tfe_team_access" "development-dev" {
 }
 
 resource "tfe_team_access" "staging-dev" {
-  access       = "plan"
+  access       = "write"
   team_id      = "${tfe_team.developers.id}"
   workspace_id = "${tfe_workspace.staging.id}"
 }
@@ -94,26 +84,8 @@ resource "tfe_team_access" "staging-ops" {
 }
 
 resource "tfe_team_access" "production-ops" {
-  access       = "plan"
+  access       = "write"
   team_id      = "${tfe_team.ops.id}"
-  workspace_id = "${tfe_workspace.production.id}"
-}
-
-resource "tfe_team_access" "development-release" {
-  access       = "write"
-  team_id      = "${tfe_team.release.id}"
-  workspace_id = "${tfe_workspace.development.id}"
-}
-
-resource "tfe_team_access" "staging-release" {
-  access       = "write"
-  team_id      = "${tfe_team.release.id}"
-  workspace_id = "${tfe_workspace.staging.id}"
-}
-
-resource "tfe_team_access" "production-release" {
-  access       = "write"
-  team_id      = "${tfe_team.release.id}"
   workspace_id = "${tfe_workspace.production.id}"
 }
 
@@ -126,12 +98,6 @@ resource "tfe_team_access" "net-devs" {
 resource "tfe_team_access" "net-ops" {
   access       = "read"
   team_id      = "${tfe_team.ops.id}"
-  workspace_id = "${tfe_workspace.network.id}"
-}
-
-resource "tfe_team_access" "net-release" {
-  access       = "read"
-  team_id      = "${tfe_team.release.id}"
   workspace_id = "${tfe_workspace.network.id}"
 }
 
