@@ -7,18 +7,27 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "use_case_name" {}
+variable "use_case_name" {
+}
 
-variable "org" {}
+variable "org" {
+}
 
-variable "hostname" {}
+variable "hostname" {
+}
 
-variable "vcs_identifier" {}
+variable "vcs_identifier" {
+}
 
-variable "oauth_token" {}
+variable "oauth_token" {
+}
 
-variable "aws_access_key" {}
+variable "aws_access_key" {
+}
 
-variable "aws_secret_key" {}
+variable "aws_secret_key" {
+}
 
-variable "creator_workspace" {}
+variable "creator_workspace" {
+}
+
