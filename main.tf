@@ -148,7 +148,7 @@ resource "tfe_workspace" "development" {
   organization      = var.org
   auto_apply        = true
   queue_all_runs    = false
-  terraform_version = "0.12.4"
+  terraform_version = "0.12.9"
 
   vcs_repo {
     branch         = "development"
@@ -162,7 +162,7 @@ resource "tfe_workspace" "staging" {
   organization      = var.org
   auto_apply        = true
   queue_all_runs    = true
-  terraform_version = "0.12.4"
+  terraform_version = "0.12.9"
 
   vcs_repo {
     branch         = "staging"
@@ -175,7 +175,7 @@ resource "tfe_workspace" "production" {
   name              = "${var.use_case_name}-production"
   organization      = var.org
   queue_all_runs    = true
-  terraform_version = "0.12.4"
+  terraform_version = "0.12.9"
 
   vcs_repo {
     branch         = "master"
@@ -201,7 +201,7 @@ resource "tfe_workspace" "network" {
   name              = var.network_workspace
   organization      = var.org
   queue_all_runs    = false
-  terraform_version = "0.12.4"
+  terraform_version = "0.12.9"
 
   vcs_repo {
     branch         = "master"
